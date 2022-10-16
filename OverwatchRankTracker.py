@@ -195,14 +195,7 @@ statsWindow.close()
 # applying the dataframe changes to the file
 mydata.to_excel("OverwatchRankStats.xlsx")
 
-#mydata = mydata.drop('Observations', 1) # Dropping the observations column. 1 for cols, 0 for rows
-#mydata = mydata.drop('Size of holds', 1)
-#mydata = mydata.drop('Distance between holds for intended beta', 1)
 
-#tempdata = mydata
-
-#for x in range(25, 29):
-    #tempdata = tempdata.drop([mydata.index[x]])
     
 
 
