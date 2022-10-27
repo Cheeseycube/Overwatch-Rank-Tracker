@@ -15,7 +15,6 @@ import sys
 
 ''' FUNCTIONS '''
 
-
 def addrow(gameOutcome, role, givendata):
     try:
         #givendata.loc[len(givendata.index)] = [gameOutcome, role]
@@ -28,7 +27,7 @@ def addrow(gameOutcome, role, givendata):
 def createTankdata(EncodedData):
     Tankdata = EncodedData
     for i in EncodedData.index:
-        if (EncodedData["Role"][i] != "tank"):
+        if (EncodedData["Role"][i] != "Tank"):
             Tankdata = Tankdata.drop([EncodedData.index[i]])
     return Tankdata
 
@@ -79,33 +78,53 @@ def displayStats(givenData):
 
 
 def addGame(givendata):
-    gameOutcome = "nan"
-    role = "nan"
-    layout = [[sg.Text("Did you win or lose?", font=("Helvetica", 20))],
-              [sg.Button("Win"), sg.Button("Loss"), sg.Exit()]]
+    gameOutcome = "win"     # default value--based off the gui
+    role = "Tank"           # default value--based off the gui
+                                            # row 1
+    layout = [[sg.Text("Please fill out the following information:", font=("Helvetica", 40))],
+                                            # row 2
+              [sg.Radio("Win", "Win/Loss", default=True, enable_events=True, key="Win", size=(20, 10), font=("Helvetica", 20)),
+               sg.Radio("Tank", "Role", default=True, enable_events=True, key="Tank", size=(20, 10), font=("Helvetica", 20))],
+                                            # row 3
+              [sg.Radio("Loss", "Win/Loss", default=False, enable_events=True, key="Loss", size=(20, 10), font=("Helvetica", 20)),
+               sg.Radio("DPS", "Role", default=False, enable_events=True, key="DPS", size=(20, 10), font=("Helvetica", 20))],
+                                            # row 4
+              [sg.Radio("Support", "Role", default=False, enable_events=True, key="Support", size=(20, 10), font=("Helvetica", 20), pad=(368, 0))],
+                                            # row 5
+              [sg.Button("Cancel", size=(20, 10), font=("Helvetica", 20)), sg.Button("Submit", size=(20, 10), font=("Helvetica", 20))]]
+
 
     InputWindow = sg.Window('Overwatch Stats Program', layout, margins=(100, 100))
 
     while True:  # while the window is active do this
         event, values = InputWindow.read()
-        if (event == sg.WIN_CLOSED):
-            break
-        if (event == 'Exit'):
+        if (event == 'Cancel' or event == sg.WIN_CLOSED):
             InputWindow.close()
-            print("exited")
-            # sys.exit(0)
-            break
+            print("cancelled add game, nothing was added")
+            sys.exit(0)
+
         if (event == 'Win'):
             print("win")
             # mydata.at[0, 'totalWon'] += 1   # just... no
             gameOutcome = "win"
-            break
         if (event == 'Loss'):
             print("loss")
             # mydata.at[0, 'totalLost'] += 1  # please stop
             gameOutcome = "loss"
-            break
 
+        if (event == 'Tank'):
+            print("Tank")
+            role = "Tank"
+        if (event == 'DPS'):
+            print("DPS")
+            role = "DPS"
+        if (event == 'Support'):
+            print("Support")
+            role = "Support"
+
+        if (event == 'Submit'):
+            print("submitted")
+            break
     # closes the window after the loop breaks
     InputWindow.close()
     # print(addrow(gameOutcome, role, givendata))
@@ -148,7 +167,7 @@ while True:  # while the window is active do this
     if (event == 'Exit'):
         WelcomeWindow.close()
         print("exited")
-        sys.exit(0)
+        #sys.exit(0)
         break
     if (event == 'See Stats'):
         WelcomeWindow.close()
@@ -157,12 +176,12 @@ while True:  # while the window is active do this
     if (event == 'Add Game'):
         WelcomeWindow.close()
         mydata = addGame(mydata)
-        print(mydata)
         break
 # closes the window after the loop breaks
 WelcomeWindow.close()
 
 # applying the dataframe changes to the file
+print(mydata)
 mydata.to_excel("OverwatchRankStats.xlsx")
 sys.exit(0)
 
