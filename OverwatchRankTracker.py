@@ -23,6 +23,7 @@ def updateRank(rank, role, givenData):
     if (role == 'Support'):
         givenData.at[2, 'Rank'] = rank
     return givenData
+
 def addrow(gameOutcome, role, givenData):
     try:
         #givendata.loc[len(givendata.index)] = [gameOutcome, role]
@@ -30,17 +31,23 @@ def addrow(gameOutcome, role, givenData):
         if (gameOutcome == "loss"):
             if (role == 'Tank'):
                 givenData.at[0, 'Rank'] = givenData.at[0, 'Rank'] - 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank":givenData.at[0, 'Rank']}
             if (role == 'DPS'):
                 givenData.at[1, 'Rank'] = givenData.at[1, 'Rank'] - 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank": givenData.at[1, 'Rank']}
             if (role == 'Support'):
                 givenData.at[2, 'Rank'] = givenData.at[2, 'Rank'] - 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank": givenData.at[2, 'Rank']}
         if (gameOutcome == "win"):
             if (role == 'Tank'):
                 givenData.at[0, 'Rank'] = givenData.at[0, 'Rank'] + 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank": givenData.at[0, 'Rank']}
             if (role == 'DPS'):
                 givenData.at[1, 'Rank'] = givenData.at[1, 'Rank'] + 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank": givenData.at[1, 'Rank']}
             if (role == 'Support'):
                 givenData.at[2, 'Rank'] = givenData.at[2, 'Rank'] + 25
+                #newRow = {"Win/Loss/Draw": gameOutcome, "Role": role, "Rank": givenData.at[2, 'Rank']}
         return givenData.append(newRow, ignore_index=True)
     except:
         print("cannot set a row with mismatched columns OR some other error idk")
@@ -159,6 +166,7 @@ def displayStats(givenData):
             #sys.exit(0)
             break
         if (event == 'Exit'):
+            statsWindow.close()
             sys.exit(0)
     statsWindow.close()
     return givenData
@@ -188,6 +196,7 @@ def addGame(givendata):
         if (event == 'Cancel' or event == sg.WIN_CLOSED):
             InputWindow.close()
             print("cancelled add game, nothing was added")
+            InputWindow.clos()
             sys.exit(0)
 
         if (event == 'Win'):
@@ -355,7 +364,7 @@ def setRank(givenData):
             return givenData
         if (event == 'Exit'):
             RankSettingWindow.close()
-            print("exited")
+            RankSettingWindow.close()
             sys.exit(0)
         if (event == 'Submit'):
             RankSettingWindow.close()
