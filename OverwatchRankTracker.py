@@ -145,7 +145,10 @@ def displayStats(givenData):
         winPercentage = 100
     else:
         #winPercentage = Wins/len(EncodedData.index) * 100
-        winPercentage = Tank_Wins / (Tank_Wins + Tank_Losses) * 100
+        try:
+            winPercentage = Tank_Wins / (Tank_Wins + Tank_Losses) * 100
+        except:
+            winPercentage = "na"
     # displaying stats
                                         # row 1
     layout = [[sg.Text(f"Total tank wins: {Tank_Wins}", font=("Helvetica", 20)),
