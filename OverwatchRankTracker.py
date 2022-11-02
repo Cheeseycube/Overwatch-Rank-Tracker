@@ -144,11 +144,12 @@ def displayStats(givenData):
     if (len(EncodedData.index) == 0):
         winPercentage = 100
     else:
-        winPercentage = Wins/len(EncodedData.index) * 100
+        #winPercentage = Wins/len(EncodedData.index) * 100
+        winPercentage = Tank_Wins / (Tank_Wins + Tank_Losses) * 100
     # displaying stats
                                         # row 1
-    layout = [[sg.Text(f"Total won: {Wins}", font=("Helvetica", 20)),
-               sg.Text(f"Total lost: {Losses}", font=("Helvetica", 20)), sg.Text(f"Overall win percentage: {winPercentage}%", font=("Helvetica", 20))],
+    layout = [[sg.Text(f"Total tank wins: {Tank_Wins}", font=("Helvetica", 20)),
+               sg.Text(f"Total tank losses: {Tank_Losses}", font=("Helvetica", 20)), sg.Text(f"Overall tank win percentage: {winPercentage}%", font=("Helvetica", 20))],
                                         # row 2
               [sg.Text(f"Estimated Tank Rank: {Tank_Rank}", font=("Helvetica", 20))],
                                         # row 3
